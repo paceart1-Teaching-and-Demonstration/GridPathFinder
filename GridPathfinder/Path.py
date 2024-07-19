@@ -10,7 +10,7 @@ class Node:
         self.weight = 1
     
     
-class Dijkstra:
+class PathFinder:
     def __init__(self, maze):
         self.maze = maze
         self.maze.Get_Start().distance = 0

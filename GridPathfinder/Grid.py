@@ -53,8 +53,6 @@ class Grid:
             new_row = []
             for jj in range(0, self.Dimension):
                 c = Cell()
-                #s = 255//self.Dimension
-                #c.Color = (s * jj, s * ii, 255)
                 new_row.append(c)
             self.Cells.append(new_row)
         self.Set_Start(self.Cells[0][0])
