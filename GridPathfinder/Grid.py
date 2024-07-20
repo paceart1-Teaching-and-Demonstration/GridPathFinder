@@ -42,6 +42,7 @@ class Grid:
         self.Screen = Screen
         self.Dimension = Dimension
         self.Cells = []
+        self.solution = None
         self.Line_Weight = 1
         self.Cell_size = int(Screen.get_width() / Dimension) - self.Line_Weight
         self.Start = None
@@ -90,7 +91,17 @@ class Grid:
     
     def Get_Stop(self):
         return self.Stop
-    
+
+    def set_solution(self, solution: [], checked_nodes: [] = None):
+        self.solution = solution
+
+        if checked_nodes is not None:
+            for node in checked_nodes:
+                node.State = State.SEARCHED
+
+        for node in solution:
+            node.State = State.PATH
+
     def Draw(self):
         for ii in range(0, self.Dimension):
             for jj in range(0, self.Dimension):
@@ -102,7 +113,7 @@ class Grid:
         
         
     def Clear_Solution(self):
-        
+        self.solution = None
         for ii in range(0, self.Dimension):
             for jj in range(0, self.Dimension):
                 if self.Cells[ii][jj].State != State.WALL:

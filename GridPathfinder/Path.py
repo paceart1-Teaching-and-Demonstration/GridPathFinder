@@ -28,7 +28,7 @@ class PathFinder:
                 current.Connected_Nodes.append(test_Node)
     
     def Preload_Connections(self):
-        for ii in range(0, self.maze.Dimension):  #FIX HERE!!!!!!!!!!!!!!!
+        for ii in range(0, self.maze.Dimension):  # TODO : FIX HERE!!!!!!!!!!!!!!!
             for jj in range(0, self.maze.Dimension):
                 current = self.maze.Get_Cell_byPosition((jj, ii))
                 if current.State != Grid.State.WALL:
@@ -36,10 +36,11 @@ class PathFinder:
                     self.Find_Connection(current, (jj+1, ii))
                     self.Find_Connection(current, (jj, ii-1))
                     self.Find_Connection(current, (jj, ii+1))
-                    
+
+    # Initializes all nodes in the maze that are not a wall as being unchecked to pull from
     def Preload_Unchecked(self):
-        self.unchecked = sum(self.maze.Cells, [])
-        self.Sort_Unchecked()
+        self.unchecked = [j for i in self.maze.Cells for j in i if j.State != Grid.State.WALL]
+        #self.Sort_Unchecked()
         
     def Sort_Unchecked(self):
         self.unchecked.sort(key=lambda x: x.distance, reverse=False)
@@ -52,26 +53,34 @@ class PathFinder:
             self.checked.append(current)
             return True
         for adjacent in current.Connected_Nodes:
+            # Lesson: Breadth first vs Dijkstra.
+            # -- If a node has been visited, why don't we need to check it
+            # -- versus Dijkstra where we would?
+            if adjacent.previous is not None:
+                continue
             val = current.distance + adjacent.weight
             if val < adjacent.distance:
                 adjacent.previous = current
                 adjacent.distance = val
         self.checked.append(current)
-        current.State = Grid.State.SEARCHED
         self.Sort_Unchecked()
         return False
     
     
     def Solve(self):
+        # Complete the solving process
         while not self.Step():
             pass
-        
+
+        # build the solution linked in reverse from the goal node
         current = self.maze.Get_Stop()
         while current:
             self.solution.append(current)
-            current.State = Grid.State.PATH
             current = current.previous
+        # the solution is backwards and needs to be reversed
         self.solution.reverse()
+        return self.solution, self.checked
+
             
 
             

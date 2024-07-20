@@ -32,7 +32,8 @@ def OnKeyPress(key):
     if key == py.K_SPACE:
         maze.Clear_Solution()
         pathfinder = Path.PathFinder(maze)
-        pathfinder.Solve()
+        maze_solution, maze_checked = pathfinder.Solve()
+        maze.set_solution(maze_solution, maze_checked)
         print("Done")
     
 py.init()
