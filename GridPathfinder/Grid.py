@@ -4,6 +4,9 @@ import Path
 
 
 class State:
+    """
+        A class to act as an enum that represents possible Node States.
+    """
     OPEN = 0
     WALL = 1
     START = 2
@@ -13,14 +16,25 @@ class State:
     
 
 class Colors:
+    """
+        A class that associates colors with Node states.
+    """
     State_Colors = {State.OPEN:(255,255,255), 
                     State.WALL:(100,100,100),
                     State.START:(0,255,0),
                     State.STOP:(0,0,255),
                     State.PATH:(255,0,0),
                     State.SEARCHED:(0,255,255)}
-    
+    @ staticmethod
     def Get_StateColor(state):
+        """Color associated with the state of a Node
+        Parameters:
+            state (int): An enum like int representing the state of a Node
+
+        Returns:
+            tuple:Returning the rgb color associated with a Node state
+            None: Returned if no state-color association is found
+        """
         if state in Colors.State_Colors.keys():
             return Colors.State_Colors[state]
 
@@ -127,7 +141,25 @@ class Grid:
         
         
         
-        
+"""
+    A class to represent a person.
+
+    ...
+
+    Attributes
+    ----------
+    name : str
+        first name of the person
+    surname : str
+        family name of the person
+    age : int
+        age of the person
+
+    Methods
+    -------
+    info(additional=""):
+        Prints the person's name and age.
+    """
         
         
         
