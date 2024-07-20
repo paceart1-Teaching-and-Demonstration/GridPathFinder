@@ -73,7 +73,7 @@ class PathFinder:
             pass
 
         # build the solution linked in reverse from the goal node
-        current = self.maze.Get_Stop()
+        current = self.maze.get_stop()
         while current:
             self.solution.append(current)
             current = current.previous

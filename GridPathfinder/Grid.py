@@ -18,16 +18,22 @@ class State:
 class Colors:
     """
         A class that associates colors with Node states.
+        Methods
+        -------
+        get_StateColor(state):
+            Returns the Color associated with the state of a Node
     """
-    State_Colors = {State.OPEN:(255,255,255), 
-                    State.WALL:(100,100,100),
-                    State.START:(0,255,0),
-                    State.STOP:(0,0,255),
-                    State.PATH:(255,0,0),
-                    State.SEARCHED:(0,255,255)}
-    @ staticmethod
-    def Get_StateColor(state):
-        """Color associated with the state of a Node
+    State_Colors = {State.OPEN: (255, 255, 255),
+                    State.WALL: (100, 100, 100),
+                    State.START: (0, 255, 0),
+                    State.STOP: (0, 0, 255),
+                    State.PATH: (255, 0, 0),
+                    State.SEARCHED: (0, 255, 255)}
+
+    @staticmethod
+    def get_state_color(state):
+        """
+        Color associated with the state of a Node
         Parameters:
             state (int): An enum like int representing the state of a Node
 
@@ -40,6 +46,20 @@ class Colors:
 
 
 class Cell(Path.Node):
+    """
+        A class to represent the data in an individual Node-Cell in a 2d grid
+        ...
+        Attributes
+        ----------
+        State : State enum as an int
+            The defined state of a cell
+
+        Methods
+        -------
+        Swap_Wall():
+            Changes the state of a Cell from OPEN to WALL or WALL to OPEN.
+    """
+
     def __init__(self):
         super().__init__()
         self.State = State.OPEN
@@ -103,7 +123,7 @@ class Grid:
         self.Stop = cell
         self.Stop.State = State.STOP
     
-    def Get_Stop(self):
+    def get_stop(self):
         return self.Stop
 
     def set_solution(self, solution: [], checked_nodes: [] = None):
@@ -119,8 +139,8 @@ class Grid:
     def Draw(self):
         for ii in range(0, self.Dimension):
             for jj in range(0, self.Dimension):
-                py.draw.rect(self.Screen, 
-                             Colors.Get_StateColor(self.Cells[jj][ii].State), 
+                py.draw.rect(self.Screen,
+                             Colors.get_state_color(self.Cells[jj][ii].State),
                              py.Rect(jj*(self.Cell_size + self.Line_Weight),
                                      ii*(self.Cell_size + self.Line_Weight),
                                      self.Cell_size,self.Cell_size))
@@ -136,32 +156,4 @@ class Grid:
                     self.Cells[ii][jj].previous = None
                     self.Cells[ii][jj].Connected_Nodes.clear()
         self.Get_Start().State = State.START
-        self.Get_Stop().State = State.STOP
-        
-        
-        
-        
-"""
-    A class to represent a person.
-
-    ...
-
-    Attributes
-    ----------
-    name : str
-        first name of the person
-    surname : str
-        family name of the person
-    age : int
-        age of the person
-
-    Methods
-    -------
-    info(additional=""):
-        Prints the person's name and age.
-    """
-        
-        
-        
-        
-        
+        self.get_stop().State = State.STOP
