@@ -13,7 +13,7 @@ class Node:
 class PathFinder:
     def __init__(self, maze):
         self.maze = maze
-        self.maze.Get_Start().distance = 0
+        self.maze.get_start().distance = 0
         self.unchecked = []
         self.checked = []
         self.solution = []
@@ -28,7 +28,7 @@ class PathFinder:
                 current.Connected_Nodes.append(test_Node)
     
     def Preload_Connections(self):
-        for ii in range(0, self.maze.Dimension):  # TODO : FIX HERE!!!!!!!!!!!!!!!
+        for ii in range(0, self.maze.Dimension):
             for jj in range(0, self.maze.Dimension):
                 current = self.maze.Get_Cell_byPosition((jj, ii))
                 if current.State != Grid.State.WALL:
@@ -40,7 +40,7 @@ class PathFinder:
     # Initializes all nodes in the maze that are not a wall as being unchecked to pull from
     def Preload_Unchecked(self):
         self.unchecked = [j for i in self.maze.Cells for j in i if j.State != Grid.State.WALL]
-        #self.Sort_Unchecked()
+        #self.Sort_Unchecked() # Todo: not needed as all weights are 1
         
     def Sort_Unchecked(self):
         self.unchecked.sort(key=lambda x: x.distance, reverse=False)

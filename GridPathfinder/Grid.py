@@ -91,11 +91,15 @@ class Grid:
                 new_row.append(c)
             self.Cells.append(new_row)
         self.Set_Start(self.Cells[0][0])
-        self.Set_Stop(self.Cells[self.Dimension-1][self.Dimension-1])
+        self.set_stop(self.Cells[self.Dimension - 1][self.Dimension - 1])
                 
-    
-    # Returns the cell based on location in the 2D List
+
     def Get_Cell_byPosition(self, location):
+        """
+        Returns the cell based on location in the 2D List
+        :param location:
+        :return: Cell
+        """
         if location[0] < 0 or location[1] < 0:
             return None
         if location[0] >= self.Dimension or location[1] >= self.Dimension:
@@ -114,19 +118,33 @@ class Grid:
         self.Start = cell
         self.Start.State = State.START
     
-    def Get_Start(self):
+    def get_start(self):
+        """
+            Gets the grid cell designated as the start point.
+            :return: Cell
+        """
         return self.Start
     
-    def Set_Stop(self, cell):
+    def set_stop(self, cell):
         if self.Stop != None:
             self.Stop.State = State.OPEN
         self.Stop = cell
         self.Stop.State = State.STOP
     
     def get_stop(self):
+        """
+        Gets the grid cell designated as the stop point / goal.
+        :return: Cell
+        """
         return self.Stop
 
     def set_solution(self, solution: [], checked_nodes: [] = None):
+        """
+        Updates the grid cells to reflect the solution and checked nodes.  Stores the solution.
+        :param solution:
+        :param checked_nodes:
+        :return: None
+        """
         self.solution = solution
 
         if checked_nodes is not None:
@@ -137,6 +155,10 @@ class Grid:
             node.State = State.PATH
 
     def Draw(self):
+        """
+        Displays the 2d grid with the state of each cell color coded
+        :return: None
+        """
         for ii in range(0, self.Dimension):
             for jj in range(0, self.Dimension):
                 py.draw.rect(self.Screen,
@@ -147,6 +169,10 @@ class Grid:
         
         
     def Clear_Solution(self):
+        """
+        Resets the grid states from path and searched to open and clears the solution
+        :return: None
+        """
         self.solution = None
         for ii in range(0, self.Dimension):
             for jj in range(0, self.Dimension):
@@ -155,5 +181,5 @@ class Grid:
                     self.Cells[ii][jj].distance = 999
                     self.Cells[ii][jj].previous = None
                     self.Cells[ii][jj].Connected_Nodes.clear()
-        self.Get_Start().State = State.START
+        self.get_start().State = State.START
         self.get_stop().State = State.STOP
